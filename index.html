@@ -122,11 +122,10 @@
 			<div class="row featured-row">
 			  <div class="col-md-6">
 				<div class="card featured-card">
-				  <img src="img/news.jpg" class="card-img-top" alt="Featured story image">
+				  <img src="img/news_kickoff.png" class="card-img-top" alt="Featured story image">
 				  <div class="card-body">
-					<h2 class="card-title"><a href="#" target="_blank">OSCLIP Holds Kick-Off Event to Launch New Open Science 
-						Collaboration for Library and Information Professionals</a></h2>
-					<p class="card-date">June 9, 2025</p>
+					<h2 class="card-title"><a href="#kickoff-event" onclick="show('kickoff-event'); return false;" aria-haspopup="dialog">OSCLIP Holds Kick-Off Event to Launch New Open Science Collaboration for Library and Information Professionals</a></h2>
+					<p class="card-date">July 9, 2025</p>
 					<p class="card-text">On May 19, 2025, the Open Science Collaborative of Library and Information Professionals 
 						(OSCLIP) officially launched with a virtual kick-off meeting, drawing over 90 participants from more than 
 						60 institutions.</p>
@@ -137,17 +136,17 @@
 				<div class="card featured-card">
 				  <img src="img/news.jpg" class="card-img-top" alt="Second featured image">
 				  <div class="card-body">
-					<h2 class="card-title"><a href="#" target="_blank">Second Headline</a></h2>
-					<p class="card-date">June 8, 2025</p>
-					<p class="card-text">short summary</p>
+					<h2 class="card-title"><a href="#createOSCLIP" onclick="show('createOSCLIP'); return false;" aria-haspopup="dialog">Announcing Open Science Collaborative of Library and Information Professionals (OSCLIP)!</a></h2>
+					<p class="card-date">May 1, 2025</p>
+					<p class="card-text">Excited to announce the creation of the Open Science Collaborative of Library and Information Professionals (OSCLIP)!</p>
 				  </div>
 				</div>
 			  </div>
 			</div>
 
+
 			<!-- Grid of older posts -->
-			<div class="row grid-row" id="newsGrid">
-			  <!-- initial visible 3 items -->
+<!--			<div class="row grid-row" id="newsGrid">
 			  <div class="col-md-4 grid-item">
 				<div class="card grid-card">
 				  <img src="img/news.jpg" class="card-img-top" alt="Third story image">
@@ -176,7 +175,6 @@
 				</div>
 			  </div>
 
-			  <!-- hidden until “Load More” -->
 			  <div class="col-md-4 grid-item">
 				<div class="card grid-card">
 				  <img src="img/news.jpg" class="card-img-top" alt="Sixth story image">
@@ -207,7 +205,6 @@
 			</div>
 		</div>
 
-		<!-- Load more -->
 		<div class="container">
 			<div class="row">
 			  <div class="col text-center">
@@ -218,6 +215,7 @@
 			  </div>
 			</div>
 		</div>
+-->	
 	</section>
 
 
@@ -752,6 +750,188 @@
 		});
 	  });
 	</script>
+
+
+<!-- BLOG POST MODAL: Kick-Off Event -->
+<div id="kickoff-event" class="overlay" role="dialog" aria-modal="true" aria-labelledby="kickoff-title">
+  <div class="popup">
+    <h2 id="kickoff-title">OSCLIP Holds Kick-Off Event to Launch New Open Science Collaboration</h2>
+    <a class="close" href="#" onclick="hide('kickoff-event')" aria-label="Close popup">&times;</a>
+    <div class="content">
+      <p>On May 19, 2025, the Open Science Collaborative of Library and Information Professionals (OSCLIP) officially launched with a virtual kickoff meeting, drawing over 90 participants from more than 60 institutions.</p>
+      <p>The event marked the beginning of a grassroots initiative aimed at uniting library and information professionals in order to foster community, amplify collective voices, and promote resource sharing among those advancing open science practices.</p>
+      <p>The meeting featured nine speakers during a lightning round session, where librarians and information professionals from a variety of institutions shared their ongoing projects and challenges. Topics ranged from open science in undergraduate research and ORCID integration into library systems to data repository standards and adapting to the ever-evolving federal compliance landscape.</p>
+      <p>The meeting also included a discussion of OSCLIP’s role in supporting on-the-ground work in libraries, how we can better understand our audience and the research lifecycle, the need for clearer definitions of open science, open scholarship, and open access, and how to work with ethical concerns and risks in politically sensitive environments. Participants expressed an interest in forming a subcommittee on ethics and exploring multi-institutional research on library leadership in open science.</p>
+      <p>The session concluded with a community poll and discussion on potential future priorities such as training, community support, training opportunities, and collective impact. The OSCLIP Steering Committee will analyze the results to help determine next steps.</p>
+      <p>Slides and a full meeting summary are available to participants, with ongoing communication facilitated through the Open Science Google Group.</p>
+      <div id="map" style="height: 500px; width: 100%; margin: 40px 0;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Include Leaflet CSS if not already included -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Marker Style -->
+<style>
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .popup {
+	background: white;
+	max-width: 900px;
+	margin: 100px auto; /* more top margin */
+	padding: 30px;
+	border-radius: 10px;
+	position: relative;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .popup h2 {
+    margin-top: 0;
+  }
+
+  .popup .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .custom-marker .marker-dot {
+    width: 14px;
+    height: 14px;
+    background-color: #2a9577;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  }
+</style>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Modal and Map Logic -->
+<script>
+  function show(id) {
+    document.getElementById(id).classList.add('active');
+    if (id === 'kickoff-event') {
+      setTimeout(() => {
+        if (typeof loadMapData === 'function') loadMapData();
+      }, 100);
+    }
+  }
+
+  function hide(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+
+  async function loadMapData() {
+    const mapContainer = document.getElementById("map");
+    if (!mapContainer || mapContainer.dataset.initialized === "true") return;
+
+    const map = L.map("map");
+    const bounds = L.latLngBounds([]);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    try {
+      const response = await fetch("data/participants.csv");
+      if (!response.ok) throw new Error("CSV not found");
+
+      const text = await response.text();
+      const rows = text.trim().split("\n").slice(1); // skip header
+
+      const affiliationCounts = new Map();
+
+      rows.forEach(row => {
+        const [name, affiliation, lat, lon] = row
+          .split(",")
+          .map(cell => cell.replace(/^"|"$/g, "").trim());
+
+        if (!affiliation || !lat || !lon) return;
+
+        const key = `${affiliation}||${lat}||${lon}`;
+        if (affiliationCounts.has(key)) {
+          affiliationCounts.get(key).count += 1;
+        } else {
+          affiliationCounts.set(key, {
+            affiliation,
+            lat: parseFloat(lat),
+            lon: parseFloat(lon),
+            count: 1
+          });
+        }
+      });
+
+      const customMarker = L.divIcon({
+        className: "custom-marker",
+        html: '<div class="marker-dot"></div>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -8]
+      });
+
+      affiliationCounts.forEach(entry => {
+        const { affiliation, lat, lon, count } = entry;
+        if (!isNaN(lat) && !isNaN(lon)) {
+          L.marker([lat, lon], { icon: customMarker })
+            .addTo(map)
+            .bindPopup(`${affiliation}<br>Participants: ${count}`);
+          bounds.extend([lat, lon]);
+        }
+      });
+
+      if (!bounds.isValid()) {
+        map.setView([39.5, -98.35], 4);
+      } else {
+        map.fitBounds(bounds, { padding: [40, 40] });
+      }
+
+      mapContainer.dataset.initialized = "true";
+    } catch (err) {
+      console.error("Map loading failed:", err);
+    }
+  }
+  
+  // Close popup if user clicks outside the .popup box
+	document.addEventListener('click', function (event) {
+	  const overlay = document.querySelector('.overlay.active');
+	  const popup = document.querySelector('.overlay.active .popup');
+	  if (overlay && popup && !popup.contains(event.target) && !event.target.closest('.card-title a')) {
+		overlay.classList.remove('active');
+	  }
+	});
+</script>
+
+<div id="createOSCLIP" class="overlay" role="dialog" aria-modal="true" aria-labelledby="createOSCLIP-title">
+  <div class="popup">
+    <h2 id="createOSCLIP-title">Announcing Open Science Collaborative of Library and Information Professionals (OSCLIP)!</h2>
+    <a class="close" href="#" onclick="hide('createOSCLIP')" aria-label="Close popup">&times;</a>
+    <div class="content">
+      <p>We are thrilled to announce the creation of the Open Science Collaborative of Library and Information Professionals (OSCLIP)! This group brings together library and information professionals who share a passion for advancing open science. </p>
+	  
+	 <p> OSCLIP aims to connect these professionals, amplify their collective impact, and provide mutual support and resources to strengthen their roles as essential components of the open science ecosystem. Our kickoff meeting will be held virtually on Monday, May 19, 2025, at 1:00 - 2:00 PM EDT.</p>
+      <p>Inaugural steering committee: Huajin Wang, Meghan Testerman, Sam Teplitzky, @Wasila Dahdul, Melanie Gainey, PhD, Kristen Scotti.</p>
+      <p>To learn more: https://osf.io/qc53z </p>
+	  <p>To register for the kickoff meeting: https://lnkd.in/eP-wJwGC</p>
+    </div>
+  </div>
+</div>
 
 		
 
