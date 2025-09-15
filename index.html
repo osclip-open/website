@@ -30,44 +30,6 @@
 	<script> $(document).ready(function () {
      $("a[rel^='prettyPhoto']").prettyPhoto();}
 	</script>
-
-	<style>
-	  .announcement-banner{
-	    position: relative;
-	    width: 100%;
-	    background: #fff3cd;            /* soft warning yellow */
-	    color: #533f03;
-	    border-bottom: 1px solid rgba(0,0,0,.075);
-	    padding: 10px 0;
-	    z-index: 900;                   /* above page content, below navbar if needed */
-	    font-size: 16px;
-	  }
-	  .announcement-banner .container{
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    gap: 12px;
-	    text-align: center;
-	    flex-wrap: wrap;
-	  }
-	  .announcement-banner strong{ font-weight: 600; }
-	  .announcement-banner .btn{
-	    padding: 6px 12px;
-	  }
-	  .announcement-banner .close{
-	    position: absolute;
-	    top: 8px;
-	    right: 12px;
-	    font-size: 22px;
-	    line-height: 1;
-	    color: inherit;
-	    opacity: .6;
-	    background: transparent;
-	    border: 0;
-	  }
-	  .announcement-banner .close:hover{ opacity: 1; cursor: pointer; }
-</style>
-
 </head>
 
 <body class="index">
@@ -99,28 +61,40 @@
         </div> <!-- /.container-fluid -->
     </nav>
 
-	<!-- Announcement Banner -->
-	<div id="meeting-banner"
-	     class="announcement-banner"
-	     role="region"
-	     aria-label="Registration announcement">
-	  <div class="container">
-	    <span>
-	      <strong>Register for our in-person meeting on October 17, 2025.</strong>
-	    </span>
-	    <a class="btn btn-primary btn-sm"
-	       href="https://docs.google.com/forms/d/e/1FAIpQLSdmltybc676VerMIruxr-bewJ3am-QFID5nFafCnJLyvWnVgQ/viewform"
-	       target="_blank" rel="noopener">
-	      Register now
-	    </a>
-	    <button type="button" class="close" aria-label="Dismiss banner">&times;</button>
-	  </div>
-	</div>
-
 	<!-- Static Banner Image -->
 	<section id="page-top" style="position: relative; overflow: hidden;">
 		<img src="img/temp_logo2.png" alt="Static Banner" style="width: 100%; height: auto; display: block;">
 	</section>
+
+	<!-- ====== In-Person Meeting Banner (place directly after the Static Banner Image section) ====== -->
+<section id="notice-banner" aria-label="Registration notice" style="background:#0b3851;">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12" style="padding:12px 0;">
+        <div class="alert alert-info" role="alert" style="margin:0; border:0; background:#e6f4ff; color:#00395f; display:flex; align-items:center; gap:12px;">
+          <span class="sr-only">Announcement:</span>
+          <i class="fa fa-calendar" aria-hidden="true" style="font-size:20px;"></i>
+          <div style="flex:1 1 auto;">
+            <strong>Register for our in-person meeting on October 17, 2025.</strong>
+          </div>
+          <a
+            class="btn btn-primary btn-sm"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdmltybc676VerMIruxr-bewJ3am-QFID5nFafCnJLyvWnVgQ/viewform"
+            target="_blank"
+            rel="noopener"
+            aria-label="Register for our in-person meeting on October 17, 2025 (opens in a new tab)"
+          >
+            Register
+          </a>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Dismiss notice" style="margin-left:8px;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ====== /In-Person Meeting Banner ====== -->
 
     <section id="about" class="vision-section" style="background-image:url('img/background_blue.png'); padding-top: 10px;">
 		<div class="container">
@@ -980,44 +954,6 @@
 	});
 </script>
 
-<script>
-  (function () {
-    var key = 'osclipBannerDismissed_Oct17_2025';
-    var banner = document.getElementById('meeting-banner');
-    if (!banner) return;
-
-    // If previously dismissed, don't show it.
-    if (window.localStorage && localStorage.getItem(key) === '1') {
-      banner.parentNode.removeChild(banner);
-      return;
-    }
-
-    // Dismiss and remember
-    var closeBtn = banner.querySelector('.close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function () {
-        banner.parentNode.removeChild(banner);
-        try { localStorage.setItem(key, '1'); } catch (e) {}
-      });
-    }
-  })();
-</script>
-
-<script>
-  (function () {
-    var banner = document.getElementById('meeting-banner');
-    var nav = document.querySelector('.navbar.navbar-fixed-top');
-    if (!banner || !nav) return;
-
-    function placeBanner() {
-      banner.style.marginTop = nav.offsetHeight + 'px';
-    }
-
-    placeBanner();
-    window.addEventListener('resize', placeBanner);
-  })();
-</script>
-
 
 <div id="createOSCLIP" class="overlay" role="dialog" aria-modal="true" aria-labelledby="createOSCLIP-title">
   <div class="popup">
@@ -1039,5 +975,6 @@
 </body>
 
 </html>
+
 
 
