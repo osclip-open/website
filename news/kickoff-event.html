@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OSCLIP | Kick-Off Event Recap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Local site CSS (note the ../ since we're inside /news) -->
+  <link href="../asset/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/responsive.css" rel="stylesheet">
+  <link href="../css/theme.css" rel="stylesheet">
+
+  <!-- Leaflet CSS (CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <style>
+    body { padding-top: 70px; }
+    .article-hero { width:100%; height:auto; display:block; border-radius:6px; }
+    .article-meta { color:#6c757d; margin:8px 0 20px; }
+    .article-container { padding: 40px 0; }
+    .breadcrumb { background:transparent; padding:0; margin-bottom:16px; }
+
+    /* Map container + Bootstrap/Leaflet compatibility fixes */
+    #map { height: 500px; width: 100%; margin: 40px 0; position: relative; z-index: 1; }
+    .leaflet-container img { max-width: none !important; } /* prevent Bootstrap from breaking tiles */
+    #map, #map * { pointer-events: auto !important; }      /* ensure interactivity */
+  </style>
+</head>
+<body class="index">
+  <!-- Navbar (links back to sections on the homepage) -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="../index.html#page-top">OSCLIP</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+        </button>
+      </div>
+      <div id="nav-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#latest-news">News</a></li>
+          <li><a href="../index.html#people">Steering Committee</a></li>
+          <li><a href="../index.html#registration">Stay Connected</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="article-container">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="../index.html#latest-news">← Back to News</a></li>
+      </ol>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h1 style="margin-top:20px;">OSCLIP Holds Kick-Off Event to Launch New Open Science Collaboration</h1>
+          <div class="article-meta">Published July 9, 2025</div>
+
+          <article>
+            <p>On May 19, 2025, the Open Science Collaborative of Library and Information Professionals (OSCLIP) officially launched with a virtual kickoff meeting, drawing over 90 participants from more than 60 institutions.</p>
+            <p>The event marked the beginning of a grassroots initiative aimed at uniting library and information professionals in order to foster community, amplify collective voices, and promote resource sharing among those advancing open science practices.</p>
+            <p>The meeting featured nine speakers during a lightning round session, where librarians and information professionals from a variety of institutions shared their ongoing projects and challenges. Topics ranged from open science in undergraduate research and ORCID integration into library systems to data repository standards and adapting to the ever-evolving federal compliance landscape.</p>
+            <p>The meeting also included a discussion of OSCLIP’s role in supporting on-the-ground work in libraries, how we can better understand our audience and the research lifecycle, the need for clearer definitions of open science, open scholarship, and open access, and how to work with ethical concerns and risks in politically sensitive environments. Participants expressed an interest in forming a subcommittee on ethics and exploring multi-institutional research on library leadership in open science.</p>
+            <p>The session concluded with a community poll and discussion on potential future priorities such as training, community support, training opportunities, and collective impact. The OSCLIP Steering Committee will analyze the results to help determine next steps.</p>
+            <p>Slides and a full meeting summary are available to participants, with ongoing communication facilitated through the Open Science Google Group.</p>
+          </article>
+
+          <h3>Participants Map</h3>
+          <div id="map" aria-label="Participants map"></div>
+          <p id="mapStatus" class="text-muted" style="margin-top:8px;"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="style-1">
+    <div class="container text-center">
+      <img src="../img/temp_logo.png" alt="OSCLIP Logo" class="center-block" style="width: 12%; height: auto; margin-top:10px;">
+      <div>osclip.open&#64;gmail.com</div>
+      <div>2025 CC by 4.0</div>
+      <br>
+    </div>
+  </footer>
+
+  <!-- Local JS (note the ../) -->
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../asset/js/bootstrap.min.js"></script>
+
+  <!-- Leaflet JS (CDN) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize map immediately so it's interactive even if data load fails
+      const map = L.map('map');
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Default view (continental US)
+      map.setView([39.5, -98.35], 4);
+
+      // Make sure size is correct after layout settles
+      setTimeout(() => map.invalidateSize(), 250);
+
+      // Load participants CSV from ../data/
+      loadParticipants(map).catch(err => {
+        console.warn('Participants load failed:', err);
+        const s = document.getElementById('mapStatus');
+        if (s) s.textContent = 'Participant pins unavailable (data could not be loaded)';
+      });
+    });
+
+    async function loadParticipants(map) {
+      const res = await fetch('../data/participants.csv', { cache: 'no-store' });
+      if (!res.ok) throw new Error('CSV not found at ../data/participants.csv');
+
+      const text = await res.text();
+      const rows = text.trim().split('\n').slice(1); // skip header
+
+      const affiliationCounts = new Map();
+      rows.forEach(row => {
+        // Basic CSV split (works if your CSV fields don't contain commas inside quotes)
+        const [name, affiliation, lat, lon] = row.split(',').map(c => c.replace(/^"|"$/g, '').trim());
+        if (!affiliation || !lat || !lon) return;
+
+        const key = `${affiliation}||${lat}||${lon}`;
+        const entry = affiliationCounts.get(key) || { affiliation, lat: parseFloat(lat), lon: parseFloat(lon), count: 0 };
+        entry.count += 1;
+        affiliationCounts.set(key, entry);
+      });
+
+      const bounds = L.latLngBounds([]);
+      const customMarker = L.divIcon({
+        className: 'custom-marker',
+        html: '<div style="width:14px;height:14px;background:#2a9577;border-radius:50%;border:2px solid #fff;box-shadow:0 0 3px rgba(0,0,0,.4)"></div>',
+        iconSize: [16,16],
+        iconAnchor: [8,8],
+        popupAnchor: [0,-8]
+      });
+
+      affiliationCounts.forEach(({ affiliation, lat, lon, count }) => {
+        if (!isNaN(lat) && !isNaN(lon)) {
+          L.marker([lat, lon], { icon: customMarker })
+            .addTo(map)
+            .bindPopup(`${affiliation}<br>Participants: ${count}`);
+          bounds.extend([lat, lon]);
+        }
+      });
+
+      if (bounds.isValid()) map.fitBounds(bounds, { padding: [40, 40] });
+
+      const s = document.getElementById('mapStatus');
+      if (s) s.textContent = `Loaded ${affiliationCounts.size} institutions.`;
+    }
+  </script>
+</body>
+</html>
