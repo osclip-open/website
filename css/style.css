@@ -623,6 +623,9 @@ footer.style-1 .copyright {
 #latest-news .featured-row {
   margin-bottom: 40px;
 }
+#latest-news .featured-row .card {
+  margin: 5px;
+}
 #latest-news .featured-card {
   border: none;
   border-radius: 8px;
