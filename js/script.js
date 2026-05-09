@@ -90,7 +90,7 @@ $(document).ready(function() {
   $(".latest-news").owlCarousel({
         pagination: true,
         navigation : true,
-        slideSpeed : 2500,
+        slideSpeed : 800,
 		stopOnHover: true,
     	autoPlay: false,
     	singleItem:false,

@@ -622,6 +622,7 @@ footer.style-1 .copyright {
 /* Featured */
 #latest-news .featured-row {
   margin-bottom: 40px;
+  position: relative;
 }
 #latest-news .featured-row .card {
   margin: 5px;
@@ -655,6 +656,36 @@ footer.style-1 .copyright {
 #latest-news .featured-card .card-text {
   font-size: 1.3rem;
   line-height: 1.4;
+}
+
+/* Owl Carousel Navigation */
+#latest-news .featured-row.owl-carousel .owl-prev,
+#latest-news .featured-row.owl-carousel .owl-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+  z-index: 10;
+}
+
+#latest-news .featured-row.owl-carousel .owl-prev:hover,
+#latest-news .featured-row.owl-carousel .owl-next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#latest-news .featured-row.owl-carousel .owl-prev {
+  left: 10px;
+}
+
+#latest-news .featured-row.owl-carousel .owl-next {
+  right: 10px;
 }
 
 /* Grid */
