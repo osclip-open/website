@@ -638,8 +638,9 @@ footer.style-1 .copyright {
   transform: translateY(-5px);
 }
 #latest-news .featured-card img {
-  height: 280px;
-  object-fit: cover;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
 }
 #latest-news .featured-card .card-body {
   padding: 1.5rem;
@@ -656,6 +657,24 @@ footer.style-1 .copyright {
 #latest-news .featured-card .card-text {
   font-size: 1.3rem;
   line-height: 1.4;
+}
+
+/* Make Call for Participation card typography match Latest News */
+#call-for-participation .featured-card .card-body {
+    padding: 1.5rem;
+}
+#call-for-participation .featured-card .card-title {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+}
+#call-for-participation .featured-card .card-date {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+#call-for-participation .featured-card .card-text {
+    font-size: 1.3rem;
+    line-height: 1.4;
 }
 
 /* Owl Carousel Navigation */
@@ -717,6 +736,29 @@ footer.style-1 .copyright {
 #latest-news .grid-card .card-title {
   font-size: 1.1rem;
   margin-bottom: .5rem;
+}
+
+/* When there's only one featured card in the row (e.g., Call for Participation),
+     constrain its max width and center it so the image doesn't take the whole row */
+#latest-news .featured-row > .card:only-child,
+#latest-news .featured-row > .featured-card:only-child {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ensure Call for Participation (keeps its own id) displays like news when lone */
+#call-for-participation .featured-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+#call-for-participation .featured-row > .card:only-child,
+#call-for-participation .featured-row > .featured-card:only-child {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #latest-news .grid-card .card-date {
   font-size: .85rem;
