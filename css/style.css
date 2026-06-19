@@ -760,6 +760,43 @@ footer.style-1 .copyright {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* Stronger overrides to ensure GitHub Pages / cached CSS doesn't leave the
+     call card full-width. These use higher specificity and !important so they
+     win over other rules. */
+#call-for-participation.latest-news-section .featured-row > .card,
+#call-for-participation.latest-news-section .featured-row > .featured-card,
+#call-for-participation .featured-row > .card,
+#call-for-participation .featured-row > .featured-card {
+    max-width: 520px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+#call-for-participation .featured-card img {
+    display: block !important;
+    width: 100% !important;
+    height: 280px !important;
+    object-fit: cover !important;
+}
+
+/* Force title/date/text sizes for the call card to match news */
+#call-for-participation .featured-card .card-title {
+    font-size: 1.5rem !important;
+    margin-bottom: .5rem !important;
+    text-transform: none !important;
+}
+#call-for-participation .featured-card .card-date {
+    font-size: 1.4rem !important;
+    color: #666 !important;
+    margin-bottom: 1rem !important;
+}
+#call-for-participation .featured-card .card-text {
+    font-size: 1.3rem !important;
+    line-height: 1.4 !important;
+}
 #latest-news .grid-card .card-date {
   font-size: .85rem;
   color: #888;
