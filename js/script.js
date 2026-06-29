@@ -3,11 +3,14 @@ var $ = jQuery.noConflict();
 
 
 // Page Loader
-$(window).load(function () {
-    
+$(document).ready(function () {
     "use strict";
-	$('#loader').fadeOut();
+    $('#loader').fadeOut();
 });
+// safety net: hide no matter what after 2s
+setTimeout(function () {
+    $('#loader').fadeOut();
+}, 2000);
 
 
 
